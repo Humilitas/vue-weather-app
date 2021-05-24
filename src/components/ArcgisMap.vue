@@ -30,7 +30,6 @@
                 this.$store.dispatch("getWeatherByLocation", {latitude, longitude});
             });
         },
-        methods: {}
     }
 </script>
 

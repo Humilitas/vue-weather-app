@@ -1,6 +1,13 @@
 <template>
     <div class="weather-panel">
-        <h3 v-if="showLocationMessage">{{locationMessage}}</h3>
+        <div v-if="showLocationMessage" class="alert alert-warning alert-dismissible fade show" role="alert" style="max-width: 75vw;">
+            <i class="bi bi-exclamation-triangle"></i> {{locationMessage}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="showLocationMessage = false"></button>
+        </div>
+        <div v-if="showWeatherMessage" class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle"></i> {{ weatherMessage}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click=" $store.commit('updateWeatherMessage','')"></button>
+        </div>
         <div class="input-group mb-3">
             <input type="text" class="form-control " placeholder="City name" aria-label="City name" v-model="city" @keypress="handleKeyPress">
             <button class="btn btn-outline-secondary" type="button" @click="getCityWeather"><i class="bi bi-search"></i> Search</button>
@@ -86,7 +93,7 @@
                 latitude: 0,
                 showLocationMessage: false,
                 locationMessage: '',
-                city: ''
+                city: '',
             }
         },
         mounted() {
@@ -103,15 +110,19 @@
         },
         methods: {
             getCityWeather() {
-                this.$store.dispatch('getWeatherByCity', this.city);
-                this.city = '';
-            },
-            handleKeyPress(e) {
                 if (this.city.trim() === '') {
                     alert('Invalid City!');
                     return;
                 }
+                this.$store.dispatch('getWeatherByCity', this.city);
+                this.city = '';
+            },
+            handleKeyPress(e) {
                 if (e.code === 13 || e.key === 'Enter') {
+                    if (this.city.trim() === '') {
+                        alert('Invalid City!');
+                        return;
+                    }
                     this.getCityWeather();
                 }
             }
@@ -122,6 +133,12 @@
             },
             weatherData() {
                 return this.$store.state.weatherData;
+            },
+            weatherMessage() {
+                return this.$store.state.weatherMessage;
+            },
+            showWeatherMessage() {
+                return Boolean(this.weatherMessage);
             }
         }
     }
@@ -146,6 +163,12 @@
         img {
             width: 100%;
             max-width: 250px;
+        }
+    }
+
+    @media screen and (max-width: 767px) {
+        .weather-panel {
+            max-width: calc(100vw - 2rem);
         }
     }
 </style>

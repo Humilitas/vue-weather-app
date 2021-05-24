@@ -2,6 +2,7 @@
     <div id="app">
         <WeatherPanel></WeatherPanel>
         <ArcgisMap/>
+        <Loading/>
     </div>
 </template>
 
@@ -9,10 +10,11 @@
 
     import WeatherPanel from "./components/WeatherPanel";
     import ArcgisMap from "./components/ArcgisMap";
+    import Loading from "./components/Loading";
 
     export default {
         name: 'App',
-        components: {ArcgisMap, WeatherPanel},
+        components: {Loading, ArcgisMap, WeatherPanel},
 
     }
 </script>
