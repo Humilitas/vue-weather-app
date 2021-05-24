@@ -9,13 +9,13 @@
 <script>
 
     import WeatherPanel from "./components/WeatherPanel";
-    import ArcgisMap from "./components/ArcgisMap";
+
+    const ArcgisMap = () => import("./components/ArcgisMap");
     import Loading from "./components/Loading";
 
     export default {
         name: 'App',
         components: {Loading, ArcgisMap, WeatherPanel},
-
     }
 </script>
 
