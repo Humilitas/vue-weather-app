@@ -1,16 +1,28 @@
 <template>
     <div id="app">
-        <WeatherPanel></WeatherPanel>
+        <WeatherPanel/>
         <ArcgisMap/>
-        <Loading/>
+        <Loading v-show="$store.getters.showLoading"/>
     </div>
 </template>
 
 <script>
 
-    import WeatherPanel from "./components/WeatherPanel";
 
-    const ArcgisMap = () => import("./components/ArcgisMap");
+    const ArcgisMap = () => ({
+        // 需要加载的组件 (应该是一个 `Promise` 对象)
+        component: import("./components/ArcgisMap"),
+        // 异步组件加载时使用的组件
+        loading: Loading,
+
+    });
+    const WeatherPanel = () => ({
+        // 需要加载的组件 (应该是一个 `Promise` 对象)
+        component: import("./components/WeatherPanel"),
+        // 异步组件加载时使用的组件
+        loading: Loading,
+
+    });
     import Loading from "./components/Loading";
 
     export default {
